@@ -10,6 +10,8 @@
 <body>
     <div class="container">
         <h1>Registro Finalizado</h1>
+        <h3>¿Deseas realizar otro registro?</h3>
+        <a href="../view/fomulario.php" class="btn btn-primary">Regresar al Formulario</a>
     </div>
 </body>
 </html>

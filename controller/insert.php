@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     text: 'El permiso ha sido registrado exitosamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '../view/formulario.php';
+                    window.location.href = '../view/finalizado.php';
                 });
             </script>";
         } else {
