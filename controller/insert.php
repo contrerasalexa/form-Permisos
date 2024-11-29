@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Paso 3: Insertar datos en la tabla de permisos
         $permiso_data['id_usuarios_fk'] = $id_usuario; // Relacionar permiso con el usuario.
-        $permiso_model = new ORM($cnn, 'tipo_permiso', array_keys($permiso_data));
+        $permiso_model = new ORM($cnn, 'tramitados', array_keys($permiso_data));
 
         if ($permiso_model->insert($permiso_data)) {
             echo "<script>

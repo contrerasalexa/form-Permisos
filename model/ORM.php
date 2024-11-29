@@ -10,30 +10,43 @@ class ORM {
         $this->columns = $columns;
     }
 
-    public function insert($data) {
+    function insert($data) {
+        // Construir la consulta SQL con los nombres de columnas
         $sql = "INSERT INTO {$this->table} (";
-        foreach ($data as $key => $value) {
-            $sql .= "{$this->columns[$key]},";
+        foreach($data as $key => $value) {
+            $sql .= "{$key},";
         }
-
+    
         // Eliminar la última coma
-        $sql = rtrim($sql, ',') . ") VALUES (";
-
+        $fin = strrpos($sql, ",");
+        $sql = substr($sql, 0, $fin);
+        $sql .= ") VALUES (";
+    
         // Añadir los marcadores de posición para los valores
-        $sql .= rtrim(str_repeat('?,', count($data)), ',') . ")";
-
+        foreach($data as $key => $value) {
+            $sql .= "?,";
+        }
+    
+        // Eliminar la última coma
+        $fin = strrpos($sql, ",");
+        $sql = substr($sql, 0, $fin);
+        $sql .= ")";
+    
         // Preparar la consulta
         $stm = $this->db->prepare($sql);
-
+    
         // Obtener los valores en el orden correcto
         $values = array_values($data);
-
+    
+        // Ejecutar la consulta y manejar errores
+        $success = false;
         try {
-            return $stm->execute($values);
+            $success = $stm->execute($values);
         } catch (PDOException $ex) {
-            echo "Error: " . $ex->getMessage();
-            return false;
+            echo $ex->getMessage();
         }
+    
+        return $success;
     }
 }
 ?>
