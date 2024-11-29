@@ -13,7 +13,8 @@
 
     <div class="fondo">
         <h2>Tramite de Permisos</h2>
-        <form>
+        <form action="../controller/insert.php" method="POST">
+
             <div class="row">
                 <div>
                     <label for="nombre">Nombre(s):</label>
