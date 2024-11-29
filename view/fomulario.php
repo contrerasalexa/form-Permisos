@@ -21,6 +21,12 @@ $query_unidades = "SELECT id_unidades_pk, nombre FROM unidades WHERE estatus = 1
 $stmt_unidades = $cnn->prepare($query_unidades);
 $stmt_unidades->execute();
 $unidades = $stmt_unidades->fetchAll(PDO::FETCH_ASSOC);
+
+$query_mercados = "SELECT id_mercado_pk, nombre FROM mercado WHERE estatus = 1";
+$stmt_mercados = $cnn->prepare($query_mercados);
+$stmt_mercados->execute();
+$mercados = $stmt_mercados->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -71,12 +77,25 @@ $unidades = $stmt_unidades->fetchAll(PDO::FETCH_ASSOC);
             </select>
 
             <label for="permiso">Permiso:</label>
-            <select id="permiso" name="permiso">
+            <select id="permiso" name="permiso" onchange="toggleMercado(this.value)">
                 <option value="">Seleccione un permiso</option>
                 <?php foreach ($permisos as $permiso): ?>
                     <option value="<?= $permiso['id_permiso_pk']; ?>"><?= $permiso['nombre']; ?></option>
                 <?php endforeach; ?>
             </select>
+
+            <!-- Contenedor para el select de mercados -->
+            <div id="mercado-container" style="display: none;">
+                <label for="mercado">Mercado:</label>
+                <select id="mercado" name="mercado">
+                    <option value="">Seleccione un mercado</option>
+                    <?php foreach ($mercados as $mercado): ?>
+                        <option value="<?= $mercado['id_mercado_pk']; ?>"><?= $mercado['nombre']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+
 
             <label for="direccion_calle">Dirección Calle:</label>
             <input type="text" id="direccion_calle" name="direccion_calle" placeholder="Escribe la calle">
@@ -139,6 +158,8 @@ $unidades = $stmt_unidades->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </form>
     </div>
+
+    <script src="../js/script.js"></script>
 </body>
 
 </html>
